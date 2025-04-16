@@ -41,6 +41,8 @@ class Solution(object):
         end=" ".join(rev_words)
 
         return end
+####### הסבר
+קודם נפריד מילים ונשמור במשתנה - לאחר מכן נהפוך את הסדר שלהן ונחבר יחד
 
 java:
 class Solution {
