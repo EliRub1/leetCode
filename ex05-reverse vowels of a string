@@ -1,0 +1,86 @@
+Given a string s, reverse only all the vowels in the string and return it.
+
+The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both lower and upper cases, more than once.
+
+ 
+
+Example 1:
+
+Input: s = "IceCreAm"
+
+Output: "AceCreIm"
+
+Explanation:
+
+The vowels in s are ['I', 'e', 'e', 'A']. On reversing the vowels, s becomes "AceCreIm".
+
+Example 2:
+
+Input: s = "leetcode"
+
+Output: "leotcede"
+
+solution:
+
+python:
+
+class Solution(object):
+    def reverseVowels(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        vowels="aeiouAEIOU"
+
+        left=0
+        right=len(s)-1
+        sl=list(s)
+        while(left<right):
+            if s[left] in vowels and s[right]in vowels:
+                tmp=sl[left]
+                sl[left]=sl[right]
+                sl[right]=tmp
+                left+=1
+                right-=1
+
+            else:
+                if s[left] not in vowels:
+                    left+=1
+                if s[right] not in vowels:
+                    right-=1
+
+        return "".join(sl)
+
+java:
+class Solution {
+    public String reverseVowels(String s) {
+        HashSet<Character> set=new HashSet<>();
+        char arr[]=s.toCharArray();
+        char vowels[]={'a','e','i','o','u','A','E','I','O','U'};
+        for(char ch:vowels){
+            set.add(ch);
+        }
+        int left=0;
+        int right=arr.length-1;
+         while(left<right){
+             if((set.contains(arr[left])) && (set.contains(arr[right]))){
+                char temp=arr[left];
+                arr[left]=arr[right];
+                arr[right]=temp;
+                left++;
+                right--;
+             }
+             if(!set.contains(arr[left])){
+                left++;
+             }
+             if(!set.contains(arr[right])){
+                right--;
+             }
+        }
+        StringBuilder st=new StringBuilder();
+        for(char ch:arr){
+            st.append(ch);
+        }
+        return st.toString();
+    }
+}
