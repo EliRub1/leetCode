@@ -49,6 +49,9 @@ class Solution(object):
         for i in range(len(candies)):            
             result.append(candies[i] + extraCandies >= maxCandies)
         return result
+##     הסבר:
+ראשית נבדוק כמה ילדים יש,לאחר מכן נריץ בדיקה בכל תא האם ניתן להגיע למספר מירבי ונשמור  אמת או שקר בכל תא.
+
 java:
 class Solution {
     public List<Boolean> kidsWithCandies(int[] candies, int extraCandies) {
