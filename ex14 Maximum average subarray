@@ -1,0 +1,79 @@
+You are given an integer array nums consisting of n elements, and an integer k.
+
+Find a contiguous subarray whose length is equal to k that has the maximum average value and return this value. Any answer with a calculation error less than 10-5 will be accepted.
+
+ 
+
+Example 1:
+
+Input: nums = [1,12,-5,-6,50,3], k = 4
+Output: 12.75000
+Explanation: Maximum average is (12 - 5 - 6 + 50) / 4 = 51 / 4 = 12.75
+Example 2:
+
+Input: nums = [5], k = 1
+Output: 5.00000
+
+solution:
+
+python:
+
+class Solution(object):
+    def findMaxAverage(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: float
+        """
+        # Using Sliding window approach
+        window_sum = 0
+        max_sum = 0
+        # Set up initial window
+        for i in range(0, k):
+            window_sum += nums[i]
+        
+        max_sum = window_sum
+
+        for i in range(k, len(nums)):
+            window_sum += nums[i] - nums[i-k]
+            if window_sum > max_sum:
+                max_sum = window_sum
+
+        return float(max_sum) / k
+
+#הסבר:
+ראשית נסכום את K 
+האיברים הראשונים ואז בכל איטרציה נחסיר את האיבר הכי נמוך ונוסיף מיקום אחד יותר גבוהה במערך במקום לסכום מחדש כל פעם.
+
+
+java:
+class Solution {
+    public double findMaxAverage(int[] nums, int k) {
+        // If the array has only one element, return the element itself as the maximum average
+        if (nums.length == 1)
+            return (double) nums[0];
+
+        int start = 0;
+        int end = k;
+        double average = 0;
+
+        // Calculate the initial average of the first k elements
+        for (int i = 0; i < k; i++) {
+            average = average + (double) nums[i] / k;
+        }
+
+        // Set the initial maximum average to the calculated average
+        double max = average;
+
+        while (end < nums.length) {
+            // Slide the window and update the average
+            average = average - (double) nums[start++] / k;
+            average = average + (double) nums[end++] / k;
+
+            // Update the maximum average if the current average is greater
+            max = Math.max(average, max);
+        }
+
+        return max;
+    }
+}
