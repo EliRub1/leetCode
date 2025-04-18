@@ -1,0 +1,78 @@
+Given a 0-indexed n x n integer matrix grid, return the number of pairs (ri, cj) such that row ri and column cj are equal.
+
+A row and column pair is considered equal if they contain the same elements in the same order (i.e., an equal array).
+
+ 
+
+Example 1:
+
+
+Input: grid = [[3,2,1],[1,7,6],[2,7,7]]
+Output: 1
+Explanation: There is 1 equal row and column pair:
+- (Row 2, Column 1): [2,7,7]
+Example 2:
+
+
+Input: grid = [[3,1,2,2],[1,4,4,5],[2,4,2,2],[2,4,2,2]]
+Output: 3
+Explanation: There are 3 equal row and column pairs:
+- (Row 0, Column 0): [3,1,2,2]
+- (Row 2, Column 2): [2,4,2,2]
+- (Row 3, Column 2): [2,4,2,2]
+
+
+ solution:
+
+ python:
+
+ class Solution(object):
+    def equalPairs(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        n = len(grid)
+        hashMap = defaultdict(int)
+        
+        for row in grid:
+            rowStr = str(row)
+            hashMap[rowStr] += 1
+        
+        count = 0
+        for j in range(n):
+            col = [grid[i][j] for i in range(n)]
+            colStr = str(col)
+            count += hashMap[colStr]
+        
+        return count
+
+        ##הסבר: קשה להבנה קצת.
+
+        ניצור האשמאפ מסוג אינט שאליו נכניס קודם מחרוזות של השורות ונעדכן את המפסר המופעמים במילון
+        לאחר מכן נרוץ על העמודות ונכניס למילון.
+        לבסוף נבדוק את מספר המופעים של העומודת בתוך המילון(אם הם כבר במילון אז קיימת שורה זהה) ונעדכן את המונה.
+
+java:
+
+class Solution {
+    public int equalPairs(int[][] grid) {
+        int n = grid.length;
+        HashMap<String, Integer> hashMap = new HashMap<String, Integer>();
+        for(int [] row: grid){
+            String rowStr = Arrays.toString(row);
+            hashMap.put(rowStr, hashMap.getOrDefault(rowStr,0)+1);
+        }
+        
+        int count = 0;
+        for(int j = 0;j<n;j++){
+            int [] col = new int[n];
+            for(int i = 0;i<n;i++){
+                col[i] = grid[i][j];
+            }
+            count+=hashMap.getOrDefault(Arrays.toString(col),0);
+        }
+        return count;
+    }
+}
+        
