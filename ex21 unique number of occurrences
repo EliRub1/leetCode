@@ -1,0 +1,65 @@
+Given an array of integers arr, return true if the number of occurrences of each value in the array is unique or false otherwise.
+
+ 
+
+Example 1:
+
+Input: arr = [1,2,2,1,1,3]
+Output: true
+Explanation: The value 1 has 3 occurrences, 2 has 2 and 3 has 1. No two values have the same number of occurrences.
+Example 2:
+
+Input: arr = [1,2]
+Output: false
+Example 3:
+
+Input: arr = [-3,0,1,-3,1,1,1,-3,10,0]
+Output: true
+
+solution:
+
+class Solution(object):
+    def uniqueOccurrences(self, arr):
+        """
+        :type arr: List[int]
+        :rtype: bool
+        """
+        arr.sort()
+        cnt=[]
+        nums=[]
+
+        for i in range(len(arr)):
+            if arr[i]not in nums:
+                nums.append(arr[i])
+                x=arr.count(arr[i])
+                if x in cnt:
+                    return False
+                cnt.append(x)
+            
+        return True
+
+##הסבר 
+ניצור 2מערכים שבהם נשמור את האיברים שבדקנו ואת כמות המופעים שלהם,לאחר מכן נבדוק האם יש 2 איברים אם אותם מופעים-אם כן נחזיר שקר אחרת נחזיר אמת
+
+java: PT
+
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        
+        // שלב 1: סופרים כל מספר
+        for (int num : arr) {
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
+        }
+
+        // שלב 2: בודקים אם מספר ההופעות ייחודי
+        Set<Integer> seen = new HashSet<>();
+        for (int count : freq.values()) {
+            if (!seen.add(count)) {
+                return false;
+            }
+        }
+
+        return true;
+}
+}
